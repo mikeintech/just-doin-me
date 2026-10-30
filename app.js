@@ -98,6 +98,18 @@ tracks.forEach(([name,feature],i)=>{
   g.addEventListener('click',()=>select(i));li.append(g);grid.append(li);
 });
 
+/* Browsers hit-test the turned-over 3D face in the wrong place, so clicks go to a flat,
+   invisible copy of the list laid exactly over the visible one (same box, same -5° tilt). */
+const hits=document.createElement('div');hits.className='track-hits';
+const hitList=document.createElement('div');hitList.className='track-list';hitList.setAttribute('aria-label','Album tracks');hits.append(hitList);
+document.querySelector('.float').append(hits);
+tracks.forEach(([name,feature],i)=>{
+  const b=document.createElement('button');b.className='track';b.type='button';b.dataset.track=i;b.setAttribute('aria-pressed','false');b.textContent=name;
+  if(feature){const s=document.createElement('small');s.textContent=`FT ${feature.toUpperCase()}`;b.append(s)}
+  b.addEventListener('click',()=>select(i));hitList.append(b);
+});
+list.setAttribute('aria-hidden','true');list.inert=true;
+
 /* ---------- the fold: bottom half first, then right half ---------- */
 function update(){
   const f3=ease(clamp(progress/.28)),f2=ease(clamp((progress-.28)/.36)),f1=ease(clamp((progress-.64)/.36));
@@ -123,7 +135,7 @@ function update(){
   $('unfold').hidden=done;$('flip').hidden=!done;$('reset').hidden=!done;$('scrollCue').hidden=progress>.05;
   $('sceneLabel').textContent=flipped?'02 / THE TRACKS':done?'01 / JUST DOIN ME':progress<.28?'01 / THE TRIANGLE':progress<.64?'01 / THE SECOND FOLD':'01 / THE LAST FOLD';
   $('sceneHint').textContent=flipped?'PICK A TRACK. GET INTO IT.':done?'MOVE YOUR CURSOR. CATCH THE SILVER.':'A LITTLE RED. A WHOLE WORLD.';
-  list.inert=!flipped;list.setAttribute('aria-hidden',String(!flipped));
+  const ready=turn>.97;hits.classList.toggle('on',ready);hitList.inert=!ready;
   $('unfold').innerHTML=progress>.03?'KEEP UNFOLDING <span>↗</span>':'UNFOLD THE ALBUM <span>↗</span>';
 }
 function animate(){
@@ -152,7 +164,7 @@ addEventListener('scroll',()=>{
 
 const art=document.querySelector('.art-space'),tilt=document.querySelector('.tilt');
 art.addEventListener('pointermove',e=>{
-  if(reduced||e.pointerType==='touch')return;
+  if(reduced||e.pointerType==='touch'||flipped){tilt.style.transform='rotate(-5deg)';return}
   const r=art.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
   root.setProperty('--mx',`${x*100}%`);root.setProperty('--my',`${y*100}%`);
   tilt.style.transform=`rotate(-5deg) rotateX(${(y-.5)*-8}deg) rotateY(${(x-.5)*8}deg)`;

@@ -316,6 +316,10 @@ a.primary[aria-disabled=true]{opacity:.55}
 .listen-sec .notify{max-width:1200px;margin:60px auto 0}
 
 /* back-of-bandana clicks: the 3D layers sit over the tracklist in hit-testing, so only the track buttons take clicks once it's turned over */
-.float,.tilt,.record,.face.back{pointer-events:none}
-.record.flipped .front,.record.flipped .front *{pointer-events:none}
-.record.flipped .track-list,.record.flipped .track-list *{pointer-events:auto}
+.record,.record *{pointer-events:none}
+.track-hits{position:absolute;inset:0;transform:rotate(-5deg) translateZ(2px);pointer-events:none;visibility:hidden}
+.track-hits.on{visibility:visible}
+.track-hits .track{color:transparent;text-shadow:none;pointer-events:auto;cursor:pointer;border-radius:3px}
+.track-hits .track small{color:transparent}
+.track-hits .track:hover,.track-hits .track[aria-pressed=true]{background:#ffffff1f;box-shadow:0 0 0 3px #ffffff1f}
+.track-hits .track:focus-visible{outline:2px solid #ffb49e;outline-offset:1px}
