@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#120d0c">
+<title>Just Doin Me — Unofficial Fan Concept</title>
+<meta name="description" content="An unofficial fan-made interactive experience for Young Nudy's album JUST DOIN ME. Not affiliated with the artist or label.">
+<link rel="preload" as="image" href="assets/fabric-base.webp">
+<link rel="preload" as="image" href="assets/silver-overlay.webp">
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header>
+  <a class="wordmark" href="#top" aria-label="Top of page">YOUNG NUDY<span>JUST DOIN ME · FAN CONCEPT</span></a>
+  <nav aria-label="Main">
+    <a href="#tracks">TRACKS</a>
+    <a href="#wallpapers">WALLPAPERS</a>
+    <a class="listen" href="https://youngnudy.lnk.to/justdoinme" target="_blank" rel="noopener">LISTEN NOW <span>↗</span></a>
+  </nav>
+</header>
+
+<main>
+<div id="top" class="experience">
+  <div class="ambient" aria-hidden="true"></div>
+  <section class="stage" aria-label="Interactive album artwork">
+    <div class="edition">THE NEW ALBUM<br><span>16 TRACKS. ALL NUDY.</span></div>
+    <div class="side-note" aria-hidden="true">ATLANTA, GEORGIA — 4L</div>
+
+    <div class="art-space">
+      <div class="shadow" aria-hidden="true"></div>
+      <div class="float"><div class="tilt"><div class="record" id="record">
+        <div class="face front tri" id="front">
+          <div class="packet" aria-hidden="true"><div class="pk lo"><i></i></div><div class="pk hi"><i></i></div></div>
+          <div class="q tl"><div class="side a"></div></div>
+          <div class="flap r" id="flapR"><div class="q tr"><div class="side a"></div><div class="side b"></div></div></div>
+          <div class="flap b" id="flapB">
+            <div class="q bl"><div class="side a"></div><div class="side b"></div></div>
+            <div class="flap br" id="flapBR"><div class="q br"><div class="side a"></div><div class="side b"></div></div></div>
+          </div>
+          <div class="shine" aria-hidden="true"><i></i></div>
+          <div class="creases" aria-hidden="true"></div>
+        </div>
+        <div class="face back">
+          <img src="assets/back.jpg" alt="Red bandana with silver ornaments">
+          <div class="track-list" id="trackList" aria-label="Album tracks"></div>
+        </div>
+      </div></div></div>
+    </div>
+
+    <div class="caption"><span id="sceneLabel">01 / THE UNFOLD</span><span class="meter" aria-hidden="true"><i id="meter"></i></span><span id="sceneHint">A LITTLE RED. A WHOLE WORLD.</span></div>
+    <div class="controls">
+      <button id="unfold" class="primary">UNFOLD THE ALBUM <span>↗</span></button>
+      <button id="flip" hidden>TURN IT OVER <span>↻</span></button>
+      <button id="reset" hidden aria-label="Fold the album again">FOLD AGAIN</button>
+    </div>
+    <div class="scroll-cue" id="scrollCue">SCROLL TO UNFOLD <span>↓</span></div>
+  </section>
+</div>
+
+<nav class="rail" aria-label="Story chapters" id="rail">
+  <a href="#top"><span>01</span>THE UNFOLD</a><a href="#listen"><span>02</span>LISTEN</a><a href="#tracks"><span>03</span>TRACKS</a><a href="#wallpapers"><span>04</span>WALLPAPERS</a>
+</nav>
+
+<section id="listen" class="listen-sec">
+  <div class="section-head split">
+    <div>
+      <p class="kicker">02 — LISTEN</p>
+      <h2 id="dropHeadline">Out now.<br>Everywhere.</h2>
+      <p class="lede" id="dropLede">Pick your platform. Every link opens straight to the album.</p>
+      <div class="countdown" id="countdown" hidden></div>
+    </div>
+    <div class="platforms" id="platforms"></div>
+  </div>
+  <div class="share-row">
+    <button class="primary" id="shareAlbum" type="button">SHARE THE ALBUM <span>↗</span></button>
+    <button class="ghost" id="calendar" type="button" hidden>ADD RELEASE TO CALENDAR</button>
+  </div>
+</section>
+
+<section id="tracks" class="tracks fabric">
+  <div class="section-head">
+    <p class="kicker">03 — THE TRACKS</p>
+    <h2>Sixteen cuts.<br>No skips required.</h2>
+    <p class="lede">Every track has its own link. Tap one to share it straight to the group chat.</p>
+  </div>
+  <ol class="track-grid" id="trackGrid"></ol>
+</section>
+
+
+<section id="wallpapers" class="wallpapers">
+  <div class="section-head">
+    <p class="kicker">04 — WALLPAPERS</p>
+    <h2>Put it on<br>your lock screen.</h2>
+    <p class="lede">Built from the cloth and the print. 1080 × 1920, with room for your clock.</p>
+  </div>
+  <div class="wp-layout">
+    <div class="phone"><canvas id="wp" width="1080" height="1920" aria-label="Wallpaper preview"></canvas></div>
+    <div class="wp-controls">
+      <fieldset><legend>Centerpiece</legend><div class="chips" id="wpEmblem"></div></fieldset>
+      <fieldset><legend>Cloth</legend><div class="chips" id="wpCloth">
+        <button type="button" data-v="red" aria-pressed="true">RED</button>
+        <button type="button" data-v="black" aria-pressed="false">BLACKOUT</button>
+      </div></fieldset>
+      <fieldset><legend>Title</legend><div class="chips" id="wpTitle">
+        <button type="button" data-v="on" aria-pressed="true">ON</button>
+        <button type="button" data-v="off" aria-pressed="false">OFF</button>
+      </div></fieldset>
+      <button class="primary" id="wpSave" type="button">SAVE WALLPAPER <span>↓</span></button>
+    </div>
+  </div>
+</section>
+
+
+
+</main>
+
+<aside class="player" id="player" hidden aria-label="Selected track">
+  <div class="track-number" id="trackNumber">01</div>
+  <div class="track-info"><span>SELECTED TRACK</span><strong id="trackTitle">HITS</strong><small id="trackFeature"></small></div>
+  <button id="playPreview" class="share-track" type="button" hidden>▶ PREVIEW</button>
+  <button id="shareTrack" class="share-track" type="button" aria-label="Share this track">SHARE</button>
+  <a id="trackListen" href="https://music.apple.com/us/album/just-doin-me/6820234612" target="_blank" rel="noopener">LISTEN ON APPLE MUSIC ↗</a>
+  <button id="closePlayer" aria-label="Close selected track">×</button>
+</aside>
+
+<footer>
+  <img src="assets/emblems/crest.webp" alt="" width="70">
+  <a class="big-listen" href="https://youngnudy.lnk.to/justdoinme" target="_blank" rel="noopener">JUST DOIN ME — LISTEN NOW ↗</a>
+  <div class="socials" id="socials"></div>
+  <div class="foot-row"><span>YOUNG NUDY</span><span>UNOFFICIAL FAN CONCEPT · NOT AFFILIATED WITH YOUNG NUDY OR HIS LABEL</span><span>ATLANTA, GEORGIA</span></div>
+</footer>
+<div class="sr-only" id="announcement" aria-live="polite"></div>
+</body>
+</html>
