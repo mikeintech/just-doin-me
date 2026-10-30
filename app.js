@@ -1,3 +1,7 @@
+// Every visit starts fresh: top of the page, bandana folded, nothing selected.
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+if(location.hash)history.replaceState(null,'',location.pathname+location.search);
+scrollTo(0,0);
 /* =====================================================================
    DROP CONFIG — the label/management team fills this in. Anything left
    empty shows an honest "pending" state instead of a fake value.
@@ -64,7 +68,6 @@ function select(i){
   $('player').classList.remove('pop');void $('player').offsetWidth;$('player').classList.add('pop');
   setPreview(i);
   $('announcement').textContent=`Track ${i+1}: ${name}. Listen using the Apple Music album link.`;
-  history.replaceState(null,'',`#track-${String(i+1).padStart(2,'0')}`);
 }
 /* ---------- 30-second previews (official Apple previews; hidden if not found) ---------- */
 const audio=new Audio();let previews=null;
@@ -155,7 +158,7 @@ const experience=document.querySelector('.experience');
 $('unfold').addEventListener('click',()=>go(U_END+.1));
 $('flip').addEventListener('click',flip);
 $('reset').addEventListener('click',()=>{$('player').hidden=true;go(0)});
-$('closePlayer').addEventListener('click',()=>{$('player').hidden=true;audio.pause();history.replaceState(null,'',location.pathname+location.search);document.querySelector(`[data-track="${selected}"]`)?.focus()});
+$('closePlayer').addEventListener('click',()=>{$('player').hidden=true;audio.pause();document.querySelector(`[data-track="${selected}"]`)?.focus()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('player').hidden)$('closePlayer').click()});
 addEventListener('scroll',()=>{
   if(pinned==null){const y=(scrollY-experience.offsetTop)/vh();seek(y/U_END,(y-F_START)/(F_END-F_START))}
@@ -235,6 +238,3 @@ const chapters=railLinks.map(a=>document.querySelector(a.getAttribute('href')));
 const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){railLinks.forEach(a=>a.removeAttribute('aria-current'));railLinks[chapters.indexOf(e.target)]?.setAttribute('aria-current','true')}}),{rootMargin:'-45% 0px -50% 0px'});
 chapters.forEach(c=>c&&ro.observe(c));
 
-/* ---------- deep link: #track-07 opens that track ---------- */
-const m=location.hash.match(/^#track-(\d{1,2})$/);
-if(m&&tracks[+m[1]-1]){select(+m[1]-1);document.getElementById('tracks').scrollIntoView()}
